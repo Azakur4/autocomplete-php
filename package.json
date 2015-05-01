@@ -2,7 +2,7 @@
   "name": "autocomplete-php",
   "main": "./lib/main",
   "version": "0.1.0",
-  "description": "Autocomplete-plus provider for php",
+  "description": "Autocomplete-php provider for php",
   "repository": "https://github.com/Azakur4/autocomplete-php",
   "license": "MIT",
   "engines": {
