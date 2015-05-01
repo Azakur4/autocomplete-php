@@ -1,7 +1,7 @@
 module.exports =
   # This will work on JavaScript and CoffeeScript files, but not in js comments.
   selector: '.source.php'
-  # disableForSelector: '.source.php .comment'
+  disableForSelector: '.source.php .comment'
 
   # This will take priority over the default provider, which has a priority of 0.
   # `excludeLowerPriority` will suppress any providers with a lower priority
@@ -45,6 +45,20 @@ module.exports =
 
     for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(variable))
+
+    # \$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)
+    tokenVar = /[$][\a-zA-Z_][a-zA-Z0-9_]*/g;
+    editor = atom.workspace.getActiveTextEditor()
+    varList = editor.getText().match(tokenVar);
+    @cachedLocalVariables = [];
+
+    if varList
+      for _var in varList
+        if @cachedLocalVariables.indexOf(_var) == -1
+          @cachedLocalVariables.push {text: _var.substr(1), type: 'variable'}
+
+    for localVar in @cachedLocalVariables when localVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(localVar))
 
     completions
 
