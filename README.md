@@ -1,5 +1,5 @@
 # autocomplete-php package
 
-A short description of your package.
+This is a PHP autocomplete provider for autocomplete-plus if u wanna try it please install autocomplete-plus first.
 
-![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+[![Share the love!](https://www.paypalobjects.com/pt_BR/BR/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AMS87WQKEVEHG)

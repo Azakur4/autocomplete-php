@@ -19,9 +19,8 @@ module.exports =
   # Required: Return a promise, an array of suggestions, or null.
   # {editor, bufferPosition, scopeDescriptor, prefix}
   getSuggestions: (request) ->
-    console.log request
     new Promise (resolve) =>
-      resolve(@getKeywordNameCompletions(request))
+      resolve(@getCompletions(request))
 
   # (optional): called _after_ the suggestion `replacementPrefix` is replaced
   # by the suggestion `text` in the buffer
@@ -31,26 +30,28 @@ module.exports =
   # from things, kill any processes, etc.
   dispose: ->
 
-  getKeywordNameCompletions: ({prefix}) ->
+  getCompletions: ({prefix}) ->
     completions = []
     lowerCasePrefix = prefix.toLowerCase()
-    console.log lowerCasePrefix
 
-    for keyword in @completions.keywords when keyword.text.indexOf(lowerCasePrefix) is 0
+    for func in @completions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(func))
+
+    for keyword in @completions.keywords when keyword.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(keyword))
 
-    # for constants in @completions.constants when constants.text.indexOf(lowerCasePrefix) is 0
+    # for constants in @completions.constants when constants.text.toLowerCase().indexOf(lowerCasePrefix) is 0
     #   completions.push(@buildCompletion(constants))
 
-    for variable in @completions.variables when variable.text.indexOf(lowerCasePrefix) is 0
-      console.log variable
+    for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(variable))
 
     completions
 
-  buildCompletion: (keyword) ->
-    text: keyword.text
-    type: keyword.type
+  buildCompletion: (suggestion) ->
+    text: suggestion.text
+    type: suggestion.type
+    leftLabel: suggestion.leftLabel ?= ''
     # snipet: keyword.snippet?
-    # description: "PHP <#{keyword.text}> keyword"
-    # descriptionMoreURL: "@getTagDocsURL(tag)"
+    description: suggestion.description ?= "PHP <#{suggestion.text}> #{suggestion.type}"
+    descriptionMoreURL: suggestion.descriptionMoreURL ?= ''
