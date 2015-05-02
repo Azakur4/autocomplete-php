@@ -42,7 +42,9 @@ module.exports =
 
   isFunCon: ({scopeDescriptor}) ->
     scopes = scopeDescriptor.getScopesArray()
-    return true if scopes.indexOf('constant.other.php') isnt -1
+    return true if scopes.indexOf('constant.other.php') isnt -1 or
+      scopes.indexOf('keyword.control.php') isnt -1 or
+      scopes.indexOf('storage.type.php') isnt -1
 
   getCompletions: ({prefix}) ->
     completions = []
