@@ -44,7 +44,8 @@ module.exports =
     scopes = scopeDescriptor.getScopesArray()
     return true if scopes.indexOf('constant.other.php') isnt -1 or
       scopes.indexOf('keyword.control.php') isnt -1 or
-      scopes.indexOf('storage.type.php') isnt -1
+      scopes.indexOf('storage.type.php') isnt -1 or
+      scopes.indexOf('support.function.construct.php')
 
   getCompletions: ({prefix}) ->
     completions = []
@@ -86,6 +87,6 @@ module.exports =
     text: suggestion.text
     type: suggestion.type
     snippet: suggestion.snippet ?= null
-    # leftLabel: suggestion.leftLabel ?= ''
+    leftLabel: suggestion.leftLabel ?= null
     description: suggestion.description ?= "PHP <#{suggestion.text}> #{suggestion.type}"
-    descriptionMoreURL: suggestion.descriptionMoreURL ?= ''
+    descriptionMoreURL: suggestion.descriptionMoreURL ?= null
