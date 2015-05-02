@@ -1,3 +1,6 @@
+## 0.2.3 [Alpha]
+* Added php default vars ex: $_POST, $_GET, etc...
+
 ## 0.2.2 [Alpha]
 * Added some snippets for keywords
 * Better filter when u try to complete functions or keywords and variables

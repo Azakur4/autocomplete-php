@@ -57,9 +57,6 @@ module.exports =
     # for constants in @completions.constants when constants.text.toLowerCase().indexOf(lowerCasePrefix) is 0
     #   completions.push(@buildCompletion(constants))
 
-    for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(variable))
-
     completions
 
   getVarsCompletions: ({editor, prefix}) ->
@@ -77,6 +74,9 @@ module.exports =
 
     for localVar in @cachedLocalVariables when localVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(localVar))
+
+    for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(variable))
 
     completions
 
