@@ -38,7 +38,8 @@
         },
         {
             "text": "class",
-            "type": "keyword"
+            "type": "keyword",
+            "snippet": "/**\n * $1\n */\nclass ${2:ClassName} ${3:extends ${4:AnotherClass}}\n{\n\t$5\n\tfunction ${6:__construct}(${7:argument})\n\t{\n\t\t${0:# code...}\n\t}\n}\n"
         },
         {
             "text": "clone",
@@ -66,12 +67,13 @@
         },
         {
             "text": "do",
-            "type": "keyword"
+            "type": "keyword",
+            "snippet": "do {\n\t${0:# code...}\n} while (${1:$a <= 10});"
         },
         {
             "text": "echo",
             "type": "keyword",
-            "snippet": "echo '${1:text}'"
+            "snippet": "echo '${1:text}';"
         },
         {
             "text": "else",
@@ -79,7 +81,8 @@
         },
         {
             "text": "elseif",
-            "type": "keyword"
+            "type": "keyword",
+            "snippet": "elseif (${1:condition}) {\n\t${0:# code...}\n}"
         },
         {
             "text": "empty",
@@ -131,7 +134,8 @@
         },
         {
             "text": "for",
-            "type": "keyword"
+            "type": "keyword",
+            "snippet": "for ($${1:i}=${2:0}; $${1:i} < $3; $${1:i}++) { \n\t${0:# code...}\n}"
         },
         {
             "text": "foreach",
@@ -139,7 +143,8 @@
         },
         {
             "text": "function",
-            "type": "keyword"
+            "type": "keyword",
+            "snippet": "${1:public }function ${2:FunctionName}(${3:$${4:value}${5:=''}})\n{\n\t${0:# code...}\n}"
         },
         {
             "text": "global",
@@ -231,7 +236,8 @@
         },
         {
             "text": "switch",
-            "type": "keyword"
+            "type": "keyword",
+            "snippet": "switch (${1:variable}) {\n\tcase '${2:value}':\n\t\t${3:# code...}\n\t\tbreak;\n\t$0\n\tdefault:\n\t\t${4:# code...}\n\t\tbreak;\n}"
         },
         {
             "text": "throw",
@@ -259,7 +265,8 @@
         },
         {
             "text": "while",
-            "type": "keyword"
+            "type": "keyword",
+            "snippet": "while (${1:$a <= 10}) {\n\t${0:# code...}\n}"
         },
         {
             "text": "xor",
