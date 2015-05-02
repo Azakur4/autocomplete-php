@@ -57,8 +57,8 @@ module.exports =
     for func in @completions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(func))
 
-    # for constants in @completions.constants when constants.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-    #   completions.push(@buildCompletion(constants))
+    for constants in @completions.constants when constants.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(constants))
 
     completions
 
@@ -86,6 +86,7 @@ module.exports =
   buildCompletion: (suggestion) ->
     text: suggestion.text
     type: suggestion.type
+    displayText: suggestion.displayText ?= null
     snippet: suggestion.snippet ?= null
     leftLabel: suggestion.leftLabel ?= null
     description: suggestion.description ?= "PHP <#{suggestion.text}> #{suggestion.type}"

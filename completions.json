@@ -72,8 +72,7 @@
         },
         {
             "text": "echo",
-            "type": "keyword",
-            "snippet": "echo '${1:text}';"
+            "type": "keyword"
         },
         {
             "text": "else",
@@ -135,7 +134,7 @@
         {
             "text": "for",
             "type": "keyword",
-            "snippet": "for ($${1:i}=${2:0}; $${1:i} < $3; $${1:i}++) { \n\t${0:# code...}\n}"
+            "snippet": "for ($${1:i} = ${2:0}; $${1:i} < $3; $${1:i}++) { \n\t${0:# code...}\n}"
         },
         {
             "text": "foreach",
@@ -284,31 +283,31 @@
         },
         {
             "text": "__DIR__",
-            "type": "constants"
+            "type": "constant"
         },
         {
             "text": "__FILE__",
-            "type": "constants"
+            "type": "constant"
         },
         {
             "text": "__FUNCTION__",
-            "type": "constants"
+            "type": "constant"
         },
         {
             "text": "__LINE__",
-            "type": "constants"
+            "type": "constant"
         },
         {
             "text": "__METHOD__",
-            "type": "constants"
+            "type": "constant"
         },
         {
             "text": "__NAMESPACE__",
-            "type": "constants"
+            "type": "constant"
         },
         {
             "text": "__TRAIT__",
-            "type": "constants"
+            "type": "constant"
         }
     ],
     "variables": [
