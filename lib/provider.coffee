@@ -17,11 +17,19 @@ module.exports =
       @completions = JSON.parse(content) unless error?
       return
 
+    @funtions = {}
+    fs.readFile path.resolve(__dirname, '..', 'functions.json'), (error, content) =>
+      @funtions = JSON.parse(content) unless error?
+      return
+
+
   # Required: Return a promise, an array of suggestions, or null.
   # {editor, bufferPosition, scopeDescriptor, prefix}
   getSuggestions: (request) ->
     new Promise (resolve) =>
-      if @isVariable(request)
+      if @notShowAutocomplete(request)
+        resolve([])
+      else if @isVariable(request)
         resolve(@getVarsCompletions(request))
       else if @isFunCon(request)
         resolve(@getCompletions(request))
@@ -36,7 +44,14 @@ module.exports =
   # from things, kill any processes, etc.
   dispose: ->
 
-  isVariable: ({scopeDescriptor, prefix}) ->
+  notShowAutocomplete: ({scopeDescriptor}) ->
+    scopes = scopeDescriptor.getScopesArray()
+    return true if scopes.indexOf('keyword.operator.assignment.php') isnt -1 or
+      scopes.indexOf('keyword.operator.comparison.php') isnt -1 or
+      scopes.indexOf('keyword.operator.logical.php') isnt -1 or
+      scopes.length < 4
+
+  isVariable: ({scopeDescriptor}) ->
     scopes = scopeDescriptor.getScopesArray()
     return true if scopes.indexOf('variable.other.php') isnt -1
 
@@ -51,11 +66,11 @@ module.exports =
     completions = []
     lowerCasePrefix = prefix.toLowerCase()
 
+    for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(func))
+
     for keyword in @completions.keywords when keyword.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(keyword))
-
-    for func in @completions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(func))
 
     for constants in @completions.constants when constants.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(constants))

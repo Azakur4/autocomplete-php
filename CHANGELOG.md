@@ -1,8 +1,13 @@
+## 0.2.5 [Alpha]
+* Added constants for the provider
+* Split files to separate the functions list from the keywords
+* More validations for when the autocomplete have to appear
+
 ## 0.2.4 [Alpha]
 * Fix for some scopes
 
 ## 0.2.3 [Alpha]
-* Added php default vars ex: $_POST, $_GET, etc...
+* Added php default vars ex: POST, GET, etc...
 
 ## 0.2.2 [Alpha]
 * Added some snippets for keywords
