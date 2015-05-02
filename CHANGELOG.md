@@ -1,3 +1,6 @@
+## 0.2.4 [Alpha]
+* Fix for some scopes
+
 ## 0.2.3 [Alpha]
 * Added php default vars ex: $_POST, $_GET, etc...
 
