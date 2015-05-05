@@ -36,16 +36,15 @@ module.exports =
 
       phpEx = 'get_user_functions.php'
 
-    stdout = exec.execSync 'php ' + __dirname + '/php/' + phpEx + ' filePath=' + editor.getPath()
+    console.log 'php ' + __dirname + '/php/' + phpEx + ' filePath=' + editor.getPath()
 
-    if type
-      @userVars = JSON.parse(stdout)
-    else
-      @userFunc = JSON.parse(stdout)
+    exec.exec 'php ' + __dirname + '/php/' + phpEx + ' filePath=' + editor.getPath(), (error, stdout, stderr) =>
+      if type
+        @userVars = JSON.parse(stdout)
+      else
+        @userFuncs = JSON.parse(stdout)
 
-    @lastPath = editor.getPath()
-
-    console.log JSON.parse(stdout)
+      @lastPath = editor.getPath()
 
   # Required: Return a promise, an array of suggestions, or null.
   # {editor, bufferPosition, scopeDescriptor, prefix}
@@ -103,8 +102,9 @@ module.exports =
     for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(func))
 
-    for userFunc in @userFunc.user_functions when userFunc.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(userFunc))
+    if @userFuncs?
+      for userFunc in @userFuncs.user_functions when userFunc.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+        completions.push(@buildCompletion(userFunc))
 
     completions
 
@@ -112,8 +112,9 @@ module.exports =
     completions = []
     lowerCasePrefix = prefix.toLowerCase()
 
-    for userVar in @userVars.user_vars when userVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(userVar))
+    if @userVars?
+      for userVar in @userVars.user_vars when userVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+        completions.push(@buildCompletion(userVar))
 
     for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(variable))
