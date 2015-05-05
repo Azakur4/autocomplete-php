@@ -4,8 +4,8 @@
     $file = $_GET['filePath'];
     $source = file_get_contents($file);
     $tokens = token_get_all($source);
-
-    $functions = array();
+    
+    $cachedFunctions = array();
     $nextStringIsFunc = false;
     $inClass = false;
     $bracesCount = 0;
@@ -18,22 +18,24 @@
             case T_STRING:
                 if($nextStringIsFunc) {
                     $nextStringIsFunc = false;
-                    $functions[] = $token[1];
+                    if (!in_array($token[1], $cachedFunctions)) {
+                        $cachedFunctions[] = $token[1];
+                    }
                 }
                 break;
         }
     }
 
 
-    $ar = [];
+    $localFuncs = array();
 
-    foreach ($functions as $fun) {
+    foreach ($cachedFunctions as $fun) {
         $tmp = [
             "text" => $fun,
             "type" => "function",
         ];
 
-        array_push($ar, $tmp);
+        array_push($localFuncs, $tmp);
     }
 
-    echo json_encode(["user_functions" => $ar]);
+    echo json_encode(["user_functions" => $localFuncs]);

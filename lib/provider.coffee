@@ -24,9 +24,28 @@ module.exports =
       @funtions = JSON.parse(content) unless error?
       return
 
-  execute: ({editor}) ->
-    stdout = exec.execSync 'php ' + __dirname + '/php/get_user_functions.php filePath=' + editor.getPath()
-    @userFunctions = JSON.parse(stdout)
+  execute: (type, {editor}, force = false) ->
+    if type
+      if !force
+        return if @userVars? and @lastPath == editor.getPath()
+
+      phpEx = 'get_user_vars.php'
+    else
+      if !force
+        return if @userFunc? and @lastPath == editor.getPath()
+
+      phpEx = 'get_user_functions.php'
+
+    stdout = exec.execSync 'php ' + __dirname + '/php/' + phpEx + ' filePath=' + editor.getPath()
+
+    if type
+      @userVars = JSON.parse(stdout)
+    else
+      @userFunc = JSON.parse(stdout)
+
+    @lastPath = editor.getPath()
+
+    console.log JSON.parse(stdout)
 
   # Required: Return a promise, an array of suggestions, or null.
   # {editor, bufferPosition, scopeDescriptor, prefix}
@@ -35,9 +54,10 @@ module.exports =
       if @notShowAutocomplete(request)
         resolve([])
       else if @isVariable(request)
+        @execute(true, request)
         resolve(@getVarsCompletions(request))
       else if @isFunCon(request)
-        @execute(request)
+        @execute(false, request)
         resolve(@getCompletions(request))
       else
         resolve([])
@@ -83,7 +103,7 @@ module.exports =
     for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(func))
 
-    for userFunc in @userFunctions.user_functions when userFunc.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+    for userFunc in @userFunc.user_functions when userFunc.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(userFunc))
 
     completions
@@ -92,17 +112,8 @@ module.exports =
     completions = []
     lowerCasePrefix = prefix.toLowerCase()
 
-    tokenVar = /[$][\a-zA-Z_][a-zA-Z0-9_]*/g;
-    varList = editor.getText().match(tokenVar);
-    @cachedLocalVariables = [];
-
-    if varList
-      for _var in varList
-        if @cachedLocalVariables.indexOf(_var) == -1 and _var.substr(1) != prefix
-          @cachedLocalVariables.push {text: _var.substr(1), type: 'variable'}
-
-    for localVar in @cachedLocalVariables when localVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(localVar))
+    for userVar in @userVars.user_vars when userVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(userVar))
 
     for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(variable))
