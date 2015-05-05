@@ -36,8 +36,6 @@ module.exports =
 
       phpEx = 'get_user_functions.php'
 
-    console.log 'php ' + __dirname + '/php/' + phpEx + ' filePath=' + editor.getPath()
-
     exec.exec 'php ' + __dirname + '/php/' + phpEx + ' filePath=' + editor.getPath(), (error, stdout, stderr) =>
       if type
         @userVars = JSON.parse(stdout)
