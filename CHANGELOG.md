@@ -1,5 +1,5 @@
 ## 0.2.6 [Alpha]
-* Added completion for internal php functions [@amp343](https://github.com/amp343)
+* Added snippets for internal php functions by [@amp343](https://github.com/amp343)
 
 ## 0.2.5 [Alpha]
 * Added constants for the provider
