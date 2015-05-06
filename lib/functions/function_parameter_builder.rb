@@ -6,12 +6,32 @@
 
 module FPB
 
-	require 'open-uri'
-	require 'nokogiri'
-	require 'json'
-	require 'yaml'
+	class Base
 
-	class YamlMap
+		require 'open-uri'
+		require 'nokogiri'
+		require 'json'
+		require 'yaml'
+
+		def params_to_snippet(fn_name, params)
+			snippets = []
+			snippet_string = nil
+
+			if params
+				params.each_with_index do |param, i|
+					snippets << '${'+(i+1).to_s+':'+param.to_s+'}'
+				end
+			end
+
+			if !snippets.empty?
+				snippet_string = fn_name.to_s+'('+snippets.join(', ')+')'
+			end
+
+			return snippet_string
+		end
+	end
+
+	class YamlMap < Base
 
 		def initialize
 			@reference_path			= './phpfunc.yml'
@@ -53,6 +73,7 @@ module FPB
 			source_data.each_with_index do |sd, i|
 				reference = reference_data[sd['text']]
 				destination_data[:functions][i]['parameters'] = reference
+				destination_data[:functions][i]['snippet'] = params_to_snippet(sd['text'], reference)
 			end
 
 			File.open(@destination_path, "w") do |f|
@@ -61,7 +82,7 @@ module FPB
 		end
 	end
 
-	class RemoteFetcher
+	class RemoteFetcher < Base
 
 		def initialize
 			@fn_url 							= 'http://web.archive.org/web/20150108113252/http://php.net/manual/en/function.'
@@ -86,6 +107,7 @@ module FPB
 				final_data['functions'][index] = input_data['functions'][index]
 				final_data['functions'][index]['parameters'] = params
 				final_data['functions'][index]['fetch_time'] = Time.now.to_i
+				final_data['functions'][index]['snippet'] = params_to_snippet(input_data['functions'][index]['text'], params)
 				index += 1
 			end
 
@@ -142,13 +164,13 @@ module FPB
 	end
 
 
-	class Builder
+	class Builder < Base
 
 		attr_reader :compile_from_json_map, :compile_from_remote
 
 		def initialize
-			@yaml_map 				= YamlMap.new
-			@remote_fetcher		= RemoteFetcher.new
+			@yaml_map 				= FPB::YamlMap.new
+			@remote_fetcher		= FPB::RemoteFetcher.new
 		end
 
 		def build_from_yaml_map
