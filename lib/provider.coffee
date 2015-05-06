@@ -44,12 +44,19 @@ module.exports =
   # from things, kill any processes, etc.
   dispose: ->
 
-  notShowAutocomplete: ({scopeDescriptor}) ->
-    scopes = scopeDescriptor.getScopesArray()
+  notShowAutocomplete: (request) ->
+    return true if request.prefix is ''
+    scopes = request.scopeDescriptor.getScopesArray()
     return true if scopes.indexOf('keyword.operator.assignment.php') isnt -1 or
       scopes.indexOf('keyword.operator.comparison.php') isnt -1 or
       scopes.indexOf('keyword.operator.logical.php') isnt -1 or
       scopes.length < 4
+    return true if @isInString(request) and @isFunCon(request)
+
+  isInString: ({scopeDescriptor}) ->
+    scopes = scopeDescriptor.getScopesArray()
+    return true if scopes.indexOf('string.quoted.single.php') isnt -1 or
+      scopes.indexOf('string.quoted.double.php') isnt -1
 
   isVariable: ({scopeDescriptor}) ->
     scopes = scopeDescriptor.getScopesArray()
@@ -98,18 +105,8 @@ module.exports =
 
     completions
 
-  getParameters: (suggestion) ->
-    parameters = ''
-
-    if suggestion.parameters
-      parameters = suggestion.parameters.join(', ')
-    if suggestion.type == 'function'
-      parameters = '('+parameters+')'
-
-    parameters
-
   buildCompletion: (suggestion) ->
-    text: suggestion.text + @getParameters(suggestion)
+    text: suggestion.text
     type: suggestion.type
     displayText: suggestion.displayText ?= null
     snippet: suggestion.snippet ?= null
