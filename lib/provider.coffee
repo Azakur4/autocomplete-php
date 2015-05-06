@@ -98,18 +98,8 @@ module.exports =
 
     completions
 
-  getParameters: (suggestion) ->
-    parameters = ''
-
-    if suggestion.parameters
-      parameters = suggestion.parameters.join(', ')
-    if suggestion.type == 'function'
-      parameters = '('+parameters+')'
-
-    parameters
-
   buildCompletion: (suggestion) ->
-    text: suggestion.text + @getParameters(suggestion)
+    text: suggestion.text
     type: suggestion.type
     displayText: suggestion.displayText ?= null
     snippet: suggestion.snippet ?= null
