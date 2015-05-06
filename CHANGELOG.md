@@ -1,3 +1,6 @@
+## 0.2.6 [Alpha]
+* Added completion for internal php functions [@amp343](https://github.com/amp343)
+
 ## 0.2.5 [Alpha]
 * Added constants for the provider
 * Split files to separate the functions list from the keywords
