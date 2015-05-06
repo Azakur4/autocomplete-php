@@ -43,18 +43,24 @@ module.exports =
         @userFuncs = JSON.parse(stdout)
 
       @lastPath = editor.getPath()
+      @lastTimeEx = new Date();
 
   # Required: Return a promise, an array of suggestions, or null.
   # {editor, bufferPosition, scopeDescriptor, prefix}
   getSuggestions: (request) ->
     new Promise (resolve) =>
+      if @lastTimeEx? and Math.floor((new Date() - @lastTimeEx) / 60000) < 1
+        typeEx = false
+      else
+        typeEx = true
+
       if @notShowAutocomplete(request)
         resolve([])
       else if @isVariable(request)
-        @execute(true, request)
+        @execute(true, request, typeEx)
         resolve(@getVarsCompletions(request))
       else if @isFunCon(request)
-        @execute(false, request)
+        @execute(false, request, typeEx)
         resolve(@getCompletions(request))
       else
         resolve([])
