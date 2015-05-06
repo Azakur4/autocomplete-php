@@ -19,12 +19,14 @@ module FPB
 
 			if params
 				params.each_with_index do |param, i|
-					snippets << '${'+(i+1).to_s+':'+param.to_s+'}'
+					snippets << '${'+(i+2).to_s+':'+param.to_s+'}'
 				end
 			end
 
 			if !snippets.empty?
-				snippet_string = fn_name.to_s+'('+snippets.join(', ')+')'
+				snippet_string = fn_name.to_s+'('+snippets.join(', ')+')${'+(snippets.size+2).to_s+'}'
+			else
+				snippet_string = fn_name.to_s+'()${1}'
 			end
 
 			return snippet_string
@@ -72,7 +74,6 @@ module FPB
 
 			source_data.each_with_index do |sd, i|
 				reference = reference_data[sd['text']]
-				destination_data[:functions][i]['parameters'] = reference
 				destination_data[:functions][i]['snippet'] = params_to_snippet(sd['text'], reference)
 			end
 
@@ -105,8 +106,7 @@ module FPB
 				p 'fetching: '+input_data['functions'][index]['text']+' ('+index.to_s+' / '+stop.to_s+')'
 				params = fetch_required_params(input_data['functions'][index]['text'])
 				final_data['functions'][index] = input_data['functions'][index]
-				final_data['functions'][index]['parameters'] = params
-				final_data['functions'][index]['fetch_time'] = Time.now.to_i
+				#final_data['functions'][index]['fetch_time'] = Time.now.to_i
 				final_data['functions'][index]['snippet'] = params_to_snippet(input_data['functions'][index]['text'], params)
 				index += 1
 			end
@@ -122,7 +122,7 @@ module FPB
 			# have parameters set first
 			#
 			arr.each_with_index do |fn, i|
-				if fn['parameters'].nil?
+				if fn['snippet'].nil?
 					return i
 				end
 			end
