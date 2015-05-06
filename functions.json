@@ -76,62 +76,111 @@
         {
             "text": "array_chunk",
             "type": "function",
-            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-chunk.php"
+            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-chunk.php",
+            "parameters" : [
+              "$array",
+              "$size"
+            ]
         },
         {
             "text": "array_column",
             "type": "function",
-            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-column.php"
+            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-column.php",
+            "parameters" : [
+              "$array",
+              "$column_key"
+            ]
         },
         {
             "text": "array_combine",
             "type": "function",
-            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-combine.php"
+            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-combine.php",
+            "parameters" : [
+              "$keys",
+              "$values"
+            ]
         },
         {
             "text": "array_count_values",
             "type": "function",
-            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-count-values.php"
+            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-count-values.php",
+            "parameters" : [
+              "$array"
+            ]
         },
         {
             "text": "array_diff",
             "type": "function",
-            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-diff.php"
+            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-diff.php",
+            "parameters" : [
+              "$array1",
+              "$array2"
+            ]
         },
         {
             "text": "array_diff_assoc",
             "type": "function",
-            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-diff-assoc.php"
+            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-diff-assoc.php",
+            "parameters" : [
+              "$array1",
+              "$array2"
+            ]
         },
         {
             "text": "array_diff_key",
             "type": "function",
-            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-diff-key.php"
+            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-diff-key.php",
+            "parameters" : [
+              "$array1",
+              "$array2"
+            ]
         },
         {
             "text": "array_diff_uassoc",
             "type": "function",
-            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-diff-uassoc.php"
+            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-diff-uassoc.php",
+            "parameters" : [
+              "$array1",
+              "$array2",
+              "$key_compare_func"
+            ]
         },
         {
             "text": "array_diff_ukey",
             "type": "function",
-            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-diff-ukey.php"
+            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-diff-ukey.php",
+            "parameters" : [
+              "$array1",
+              "$array2",
+              "$key_compare_func"
+            ]
         },
         {
             "text": "array_fill",
             "type": "function",
-            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-fill.php"
+            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-fill.php",
+            "parameters" : [
+              "$start_index",
+              "$num",
+              "$value"
+            ]
         },
         {
             "text": "array_fill_keys",
             "type": "function",
-            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-fill-keys.php"
+            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-fill-keys.php",
+            "parameters" : [
+              "$keys",
+              "$value"
+            ]
         },
         {
             "text": "array_filter",
             "type": "function",
-            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-filter.php"
+            "descriptionMoreURL": "http:\/\/php.net\/manual\/en\/function.array-filter.php",
+            "parameters" : [
+              "$array"
+            ]
         },
         {
             "text": "array_flip",

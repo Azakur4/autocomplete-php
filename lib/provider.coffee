@@ -102,7 +102,7 @@ module.exports =
     console.log suggestion
     parameters = ''
     if suggestion.parameters
-      parameters = '('+suggestion.parameters.join(',')+')'
+      parameters = '('+suggestion.parameters.join(', ')+')'
 
     parameters
 
