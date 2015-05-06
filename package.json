@@ -2,7 +2,7 @@
   "name": "autocomplete-php",
   "main": "./lib/main",
   "version": "0.2.5",
-  "description": "Autocomplete-php is an PHP provider for autocomplete+",
+  "description": "Autocomplete-php is a PHP provider for autocomplete+",
   "repository": "https://github.com/Azakur4/autocomplete-php",
   "license": "MIT",
   "engines": {

@@ -81,9 +81,9 @@ module.exports =
     completions = []
     lowerCasePrefix = prefix.toLowerCase()
 
-    tokenVar = /[$][\a-zA-Z_][a-zA-Z0-9_]*/g;
-    varList = editor.getText().match(tokenVar);
-    @cachedLocalVariables = [];
+    tokenVar = /[$][\a-zA-Z_][a-zA-Z0-9_]*/g
+    varList = editor.getText().match(tokenVar)
+    @cachedLocalVariables = []
 
     if varList
       for _var in varList
@@ -98,8 +98,18 @@ module.exports =
 
     completions
 
+  getParameters: (suggestion) ->
+    parameters = ''
+
+    if suggestion.parameters
+      parameters = suggestion.parameters.join(', ')
+    if suggestion.type == 'function'
+      parameters = '('+parameters+')'
+
+    parameters
+
   buildCompletion: (suggestion) ->
-    text: suggestion.text
+    text: suggestion.text + @getParameters(suggestion)
     type: suggestion.type
     displayText: suggestion.displayText ?= null
     snippet: suggestion.snippet ?= null

@@ -1,6 +1,3 @@
 .DS_Store
 npm-debug.log
 node_modules
-.git
-lib/test.php
-lib/functions
