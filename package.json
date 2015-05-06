@@ -1,12 +1,9 @@
 {
-  "name": "autocomplete-php-functions",
+  "name": "autocomplete-php",
   "main": "./lib/main",
   "version": "0.2.5",
-  "description": "Autocomplete-php is an PHP provider for autocomplete+",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/amp343/autocomplete-php"
-  },
+  "description": "Autocomplete-php is a PHP provider for autocomplete+",
+  "repository": "https://github.com/Azakur4/autocomplete-php",
   "license": "MIT",
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
@@ -17,31 +14,5 @@
         "2.0.0": "getProvider"
       }
     }
-  },
-  "readme": "# autocomplete-php package\nThis is an Alpha version.\n\nThis is a PHP autocomplete provider for autocomplete-plus if u wanna try it please install autocomplete-plus first.\n\nTo-Do List\n- [x] Get local variables from current file (Need more work to better performance)\n- [ ] Get local functions from current file\n- [ ] Update option for list of internal php functions (Will need php installed)\n\n[![Share the love!](https://www.paypalobjects.com/pt_BR/BR/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=AMS87WQKEVEHG)\n",
-  "readmeFilename": "README.md",
-  "bugs": {
-    "url": "https://github.com/amp343/autocomplete-php/issues"
-  },
-  "homepage": "https://github.com/amp343/autocomplete-php",
-  "_id": "autocomplete-php@0.2.5",
-  "_shasum": "1c59eed6fafe04599afceab9dec1a4ed2d55936c",
-  "_resolved": "file:../d-11546-15151-b7s3fq/package.tgz",
-  "_from": "../d-11546-15151-b7s3fq/package.tgz",
-  "_atomModuleCache": {
-    "version": 1,
-    "dependencies": [],
-    "extensions": {
-      ".json": [
-        "completions.json",
-        "functions.json",
-        "package.json"
-      ],
-      ".coffee": [
-        "lib/main.coffee",
-        "lib/provider.coffee"
-      ]
-    },
-    "folders": []
   }
 }

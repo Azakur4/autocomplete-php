@@ -142,7 +142,7 @@
       "type": "function",
       "descriptionMoreURL": "http://php.net/manual/en/function.array-column.php",
       "parameters": null,
-      "fetch_time": 1430909626
+      "fetch_time": 1430930208
     },
     {
       "text": "array_combine",
@@ -152,7 +152,7 @@
         "$keys",
         "$values"
       ],
-      "fetch_time": 1430909628
+      "fetch_time": 1430930209
     },
     {
       "text": "array_count_values",
@@ -161,7 +161,7 @@
       "parameters": [
         "$input"
       ],
-      "fetch_time": 1430909629
+      "fetch_time": 1430930210
     },
     {
       "text": "array_diff",
@@ -171,7 +171,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430909630
+      "fetch_time": 1430930211
     },
     {
       "text": "array_diff_assoc",
@@ -181,7 +181,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430909631
+      "fetch_time": 1430930212
     },
     {
       "text": "array_diff_key",
@@ -191,7 +191,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430909632
+      "fetch_time": 1430930213
     },
     {
       "text": "array_diff_uassoc",
@@ -201,7 +201,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430909633
+      "fetch_time": 1430930214
     },
     {
       "text": "array_diff_ukey",
@@ -211,7 +211,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430909635
+      "fetch_time": 1430930215
     },
     {
       "text": "array_fill",
@@ -222,7 +222,7 @@
         "$num",
         "$value"
       ],
-      "fetch_time": 1430909636
+      "fetch_time": 1430930216
     },
     {
       "text": "array_fill_keys",
@@ -232,7 +232,7 @@
         "$keys",
         "$value"
       ],
-      "fetch_time": 1430909637
+      "fetch_time": 1430930217
     },
     {
       "text": "array_filter",
@@ -241,7 +241,7 @@
       "parameters": [
         "$input"
       ],
-      "fetch_time": 1430909638
+      "fetch_time": 1430930218
     },
     {
       "text": "array_flip",
@@ -250,7 +250,7 @@
       "parameters": [
         "$trans"
       ],
-      "fetch_time": 1430909639
+      "fetch_time": 1430930219
     },
     {
       "text": "array_intersect",
@@ -260,7 +260,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430909640
+      "fetch_time": 1430930220
     },
     {
       "text": "array_intersect_assoc",
@@ -270,7 +270,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430909641
+      "fetch_time": 1430930221
     },
     {
       "text": "array_intersect_key",
@@ -280,7 +280,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430909642
+      "fetch_time": 1430930222
     },
     {
       "text": "array_intersect_uassoc",
@@ -290,7 +290,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430909643
+      "fetch_time": 1430930223
     },
     {
       "text": "array_intersect_ukey",
@@ -300,7 +300,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430909644
+      "fetch_time": 1430930224
     },
     {
       "text": "array_key_exists",
@@ -310,7 +310,7 @@
         "$key",
         "$search"
       ],
-      "fetch_time": 1430909645
+      "fetch_time": 1430930225
     },
     {
       "text": "array_keys",
@@ -319,7 +319,7 @@
       "parameters": [
         "$input"
       ],
-      "fetch_time": 1430909646
+      "fetch_time": 1430930226
     },
     {
       "text": "array_map",
@@ -329,7 +329,7 @@
         "$callback",
         "$arr1"
       ],
-      "fetch_time": 1430909647
+      "fetch_time": 1430930227
     },
     {
       "text": "array_merge",
@@ -338,7 +338,7 @@
       "parameters": [
         "$array1"
       ],
-      "fetch_time": 1430909648
+      "fetch_time": 1430930229
     },
     {
       "text": "array_merge_recursive",
@@ -347,7 +347,7 @@
       "parameters": [
         "$array1"
       ],
-      "fetch_time": 1430909649
+      "fetch_time": 1430930230
     },
     {
       "text": "array_multisort",
@@ -356,7 +356,7 @@
       "parameters": [
         "$arr"
       ],
-      "fetch_time": 1430909650
+      "fetch_time": 1430930231
     },
     {
       "text": "array_pad",
@@ -367,7 +367,7 @@
         "$pad_size",
         "$pad_value"
       ],
-      "fetch_time": 1430909651
+      "fetch_time": 1430930232
     },
     {
       "text": "array_pop",
@@ -376,7 +376,7 @@
       "parameters": [
         "$array"
       ],
-      "fetch_time": 1430909652
+      "fetch_time": 1430930233
     },
     {
       "text": "array_product",
@@ -385,7 +385,7 @@
       "parameters": [
         "$array"
       ],
-      "fetch_time": 1430909652
+      "fetch_time": 1430930233
     },
     {
       "text": "array_push",
@@ -395,7 +395,7 @@
         "$array",
         "$var"
       ],
-      "fetch_time": 1430909654
+      "fetch_time": 1430930235
     },
     {
       "text": "array_rand",
@@ -404,7 +404,7 @@
       "parameters": [
         "$input"
       ],
-      "fetch_time": 1430909655
+      "fetch_time": 1430930238
     },
     {
       "text": "array_reduce",
@@ -414,21 +414,21 @@
         "$input",
         "$function"
       ],
-      "fetch_time": 1430909655
+      "fetch_time": 1430930240
     },
     {
       "text": "array_replace",
       "type": "function",
       "descriptionMoreURL": "http://php.net/manual/en/function.array-replace.php",
       "parameters": null,
-      "fetch_time": 1430909656
+      "fetch_time": 1430930242
     },
     {
       "text": "array_replace_recursive",
       "type": "function",
       "descriptionMoreURL": "http://php.net/manual/en/function.array-replace-recursive.php",
       "parameters": null,
-      "fetch_time": 1430909657
+      "fetch_time": 1430930244
     },
     {
       "text": "array_reverse",
@@ -437,7 +437,7 @@
       "parameters": [
         "$array"
       ],
-      "fetch_time": 1430909658
+      "fetch_time": 1430930246
     },
     {
       "text": "array_search",
@@ -447,7 +447,7 @@
         "$needle",
         "$haystack"
       ],
-      "fetch_time": 1430909659
+      "fetch_time": 1430930247
     },
     {
       "text": "array_shift",
@@ -456,7 +456,7 @@
       "parameters": [
         "$array"
       ],
-      "fetch_time": 1430909660
+      "fetch_time": 1430930248
     },
     {
       "text": "array_slice",
@@ -466,7 +466,7 @@
         "$array",
         "$offset"
       ],
-      "fetch_time": 1430909661
+      "fetch_time": 1430930249
     },
     {
       "text": "array_splice",
@@ -476,7 +476,7 @@
         "$input",
         "$offset"
       ],
-      "fetch_time": 1430909662
+      "fetch_time": 1430930250
     },
     {
       "text": "array_sum",
@@ -485,7 +485,7 @@
       "parameters": [
         "$array"
       ],
-      "fetch_time": 1430923079
+      "fetch_time": 1430930251
     },
     {
       "text": "array_udiff",
@@ -495,7 +495,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430923080
+      "fetch_time": 1430930252
     },
     {
       "text": "array_udiff_assoc",
@@ -505,7 +505,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430923081
+      "fetch_time": 1430930253
     },
     {
       "text": "array_udiff_uassoc",
@@ -515,7 +515,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430923082
+      "fetch_time": 1430930254
     },
     {
       "text": "array_uintersect",
@@ -525,7 +525,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430923083
+      "fetch_time": 1430930255
     },
     {
       "text": "array_uintersect_assoc",
@@ -535,7 +535,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430923084
+      "fetch_time": 1430930256
     },
     {
       "text": "array_uintersect_uassoc",
@@ -545,7 +545,7 @@
         "$array1",
         "$array2"
       ],
-      "fetch_time": 1430923085
+      "fetch_time": 1430930257
     },
     {
       "text": "array_unique",
@@ -554,7 +554,7 @@
       "parameters": [
         "$array"
       ],
-      "fetch_time": 1430923086
+      "fetch_time": 1430930259
     },
     {
       "text": "array_unshift",
@@ -564,7 +564,7 @@
         "$array",
         "$var"
       ],
-      "fetch_time": 1430923088
+      "fetch_time": 1430930265
     },
     {
       "text": "array_values",
@@ -573,7 +573,7 @@
       "parameters": [
         "$input"
       ],
-      "fetch_time": 1430923089
+      "fetch_time": 1430930266
     },
     {
       "text": "array_walk",
@@ -583,7 +583,7 @@
         "$array",
         "$funcname"
       ],
-      "fetch_time": 1430923093
+      "fetch_time": 1430930267
     },
     {
       "text": "array_walk_recursive",
@@ -593,7 +593,7 @@
         "$input",
         "$funcname"
       ],
-      "fetch_time": 1430923093
+      "fetch_time": 1430930268
     },
     {
       "text": "arsort",
@@ -602,7 +602,7 @@
       "parameters": [
         "$array"
       ],
-      "fetch_time": 1430923094
+      "fetch_time": 1430930269
     },
     {
       "text": "asin",
@@ -611,7 +611,7 @@
       "parameters": [
         "$arg"
       ],
-      "fetch_time": 1430923095
+      "fetch_time": 1430930271
     },
     {
       "text": "asinh",

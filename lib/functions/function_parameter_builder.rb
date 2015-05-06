@@ -15,7 +15,7 @@ module FPB
 
 		def initialize
 			@reference_path			= './phpfunc.yml'
-			@source_path				= '../functions.json'
+			@source_path				= '../../functions.json'
 			@destination_path		= @source_path
 		end
 
@@ -66,7 +66,7 @@ module FPB
 		def initialize
 			@fn_url 							= 'http://web.archive.org/web/20150108113252/http://php.net/manual/en/function.'
 			@trunk_reference_url 	= 'http://svn.php.net/viewvc/phpdoc/en/trunk/reference/'
-			@source_path					= '../functions.json'
+			@source_path					= '../../functions.json'
 			@destination_path			= @source_path
 		end
 
