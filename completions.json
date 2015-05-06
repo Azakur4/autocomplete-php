@@ -1,0 +1,373 @@
+{
+    "keywords": [
+        {
+            "text": "__halt_compiler",
+            "type": "keyword"
+        },
+        {
+            "text": "abstract",
+            "type": "keyword"
+        },
+        {
+            "text": "and",
+            "type": "keyword"
+        },
+        {
+            "text": "array",
+            "type": "keyword"
+        },
+        {
+            "text": "as",
+            "type": "keyword"
+        },
+        {
+            "text": "break",
+            "type": "keyword"
+        },
+        {
+            "text": "callable",
+            "type": "keyword"
+        },
+        {
+            "text": "case",
+            "type": "keyword"
+        },
+        {
+            "text": "catch",
+            "type": "keyword"
+        },
+        {
+            "text": "class",
+            "type": "keyword",
+            "snippet": "/**\n * $1\n */\nclass ${2:ClassName} ${3:extends ${4:AnotherClass}}\n{\n\t$5\n\tfunction ${6:__construct}(${7:argument})\n\t{\n\t\t${0:# code...}\n\t}\n}\n"
+        },
+        {
+            "text": "clone",
+            "type": "keyword"
+        },
+        {
+            "text": "const",
+            "type": "keyword"
+        },
+        {
+            "text": "continue",
+            "type": "keyword"
+        },
+        {
+            "text": "declare",
+            "type": "keyword"
+        },
+        {
+            "text": "default",
+            "type": "keyword"
+        },
+        {
+            "text": "die",
+            "type": "keyword"
+        },
+        {
+            "text": "do",
+            "type": "keyword",
+            "snippet": "do {\n\t${0:# code...}\n} while (${1:$a <= 10});"
+        },
+        {
+            "text": "echo",
+            "type": "keyword"
+        },
+        {
+            "text": "else",
+            "type": "keyword"
+        },
+        {
+            "text": "elseif",
+            "type": "keyword",
+            "snippet": "elseif (${1:condition}) {\n\t${0:# code...}\n}"
+        },
+        {
+            "text": "empty",
+            "type": "keyword"
+        },
+        {
+            "text": "enddeclare",
+            "type": "keyword"
+        },
+        {
+            "text": "endfor",
+            "type": "keyword"
+        },
+        {
+            "text": "endforeach",
+            "type": "keyword"
+        },
+        {
+            "text": "endif",
+            "type": "keyword"
+        },
+        {
+            "text": "endswitch",
+            "type": "keyword"
+        },
+        {
+            "text": "endwhile",
+            "type": "keyword"
+        },
+        {
+            "text": "eval",
+            "type": "keyword"
+        },
+        {
+            "text": "exit",
+            "type": "keyword"
+        },
+        {
+            "text": "extends",
+            "type": "keyword"
+        },
+        {
+            "text": "final",
+            "type": "keyword"
+        },
+        {
+            "text": "finally",
+            "type": "keyword"
+        },
+        {
+            "text": "for",
+            "type": "keyword",
+            "snippet": "for ($${1:i} = ${2:0}; $${1:i} < $3; $${1:i}++) { \n\t${0:# code...}\n}"
+        },
+        {
+            "text": "foreach",
+            "type": "keyword"
+        },
+        {
+            "text": "function",
+            "type": "keyword",
+            "snippet": "${1:public }function ${2:FunctionName}(${3:$${4:value}${5:=''}})\n{\n\t${0:# code...}\n}"
+        },
+        {
+            "text": "global",
+            "type": "keyword"
+        },
+        {
+            "text": "goto",
+            "type": "keyword"
+        },
+        {
+            "text": "if",
+            "type": "keyword"
+        },
+        {
+            "text": "implements",
+            "type": "keyword"
+        },
+        {
+            "text": "include",
+            "type": "keyword"
+        },
+        {
+            "text": "include_once",
+            "type": "keyword"
+        },
+        {
+            "text": "instanceof",
+            "type": "keyword"
+        },
+        {
+            "text": "insteadof",
+            "type": "keyword"
+        },
+        {
+            "text": "interface",
+            "type": "keyword"
+        },
+        {
+            "text": "isset",
+            "type": "keyword"
+        },
+        {
+            "text": "list",
+            "type": "keyword"
+        },
+        {
+            "text": "namespace",
+            "type": "keyword"
+        },
+        {
+            "text": "new",
+            "type": "keyword"
+        },
+        {
+            "text": "or",
+            "type": "keyword"
+        },
+        {
+            "text": "print",
+            "type": "keyword"
+        },
+        {
+            "text": "private",
+            "type": "keyword"
+        },
+        {
+            "text": "protected",
+            "type": "keyword"
+        },
+        {
+            "text": "public",
+            "type": "keyword"
+        },
+        {
+            "text": "require",
+            "type": "keyword"
+        },
+        {
+            "text": "require_once",
+            "type": "keyword"
+        },
+        {
+            "text": "return",
+            "type": "keyword"
+        },
+        {
+            "text": "static",
+            "type": "keyword"
+        },
+        {
+            "text": "switch",
+            "type": "keyword",
+            "snippet": "switch (${1:variable}) {\n\tcase '${2:value}':\n\t\t${3:# code...}\n\t\tbreak;\n\t$0\n\tdefault:\n\t\t${4:# code...}\n\t\tbreak;\n}"
+        },
+        {
+            "text": "throw",
+            "type": "keyword"
+        },
+        {
+            "text": "trait",
+            "type": "keyword"
+        },
+        {
+            "text": "try",
+            "type": "keyword"
+        },
+        {
+            "text": "unset",
+            "type": "keyword"
+        },
+        {
+            "text": "use",
+            "type": "keyword"
+        },
+        {
+            "text": "var",
+            "type": "keyword"
+        },
+        {
+            "text": "while",
+            "type": "keyword",
+            "snippet": "while (${1:$a <= 10}) {\n\t${0:# code...}\n}"
+        },
+        {
+            "text": "xor",
+            "type": "keyword"
+        },
+        {
+            "text": "yield",
+            "type": "keyword"
+        }
+    ],
+    "constants": [
+        {
+            "text": "__CLASS__",
+            "type": "constant"
+        },
+        {
+            "text": "__DIR__",
+            "type": "constant"
+        },
+        {
+            "text": "__FILE__",
+            "type": "constant"
+        },
+        {
+            "text": "__FUNCTION__",
+            "type": "constant"
+        },
+        {
+            "text": "__LINE__",
+            "type": "constant"
+        },
+        {
+            "text": "__METHOD__",
+            "type": "constant"
+        },
+        {
+            "text": "__NAMESPACE__",
+            "type": "constant"
+        },
+        {
+            "text": "__TRAIT__",
+            "type": "constant"
+        }
+    ],
+    "variables": [
+        {
+            "text": "GLOBALS",
+            "type": "variable"
+        },
+        {
+            "text": "_SERVER",
+            "type": "variable"
+        },
+        {
+            "text": "_GET",
+            "type": "variable",
+            "leftLabel": "Array"
+        },
+        {
+            "text": "_POST",
+            "type": "variable",
+            "leftLabel": "Array"
+        },
+        {
+            "text": "_FILES",
+            "type": "variable"
+        },
+        {
+            "text": "_REQUEST",
+            "type": "variable"
+        },
+        {
+            "text": "_SESSION",
+            "type": "variable"
+        },
+        {
+            "text": "_ENV",
+            "type": "variable"
+        },
+        {
+            "text": "_COOKIE",
+            "type": "variable"
+        },
+        {
+            "text": "php_errormsg",
+            "type": "variable"
+        },
+        {
+            "text": "HTTP_RAW_POST_DATA",
+            "type": "variable"
+        },
+        {
+            "text": "http_response_header",
+            "type": "variable"
+        },
+        {
+            "text": "argc",
+            "type": "variable"
+        },
+        {
+            "text": "argv",
+            "type": "variable"
+        }
+    ]
+}
