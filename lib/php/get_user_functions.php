@@ -11,8 +11,7 @@
 
     $nextStringIsFunc = false;
     $functionParameters = false;
-    $inClass = false;
-    $bracesCount = 0;
+    $snippetCount = 1;
 
     foreach($tokens as $token) {
         switch($token[0]) {
@@ -39,11 +38,12 @@
                     $functionParameters = false;
                     $cachedFunctionComplex[] = $tmpFunc;
                     $tmpFunc = array();
+                    $snippetCount = 1;
                 }
                 break;
             case T_VARIABLE:
                 if ($functionParameters) {
-                    $tmpFunc[] = $token[1];
+                    $tmpFunc[] = '${' . $snippetCount++ . ':' . $token[1] . '}';
                 }
                 break;
         }
