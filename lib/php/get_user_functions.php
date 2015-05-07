@@ -1,8 +1,10 @@
 <?php
-    parse_str(implode('&', array_slice($argv, 1)), $_GET);
+    $source = '';
 
-    $file = $_GET['filePath'];
-    $source = file_get_contents($file);
+    while ($a = fread(STDIN, 1024)) {
+        $source .= $a;
+    }
+
     $tokens = token_get_all($source);
 
     $cachedFunctions = array();
@@ -54,12 +56,12 @@
 
     foreach ($cachedFunctionComplex as $funObj) {
         $tmp = [
-            "text" => $funObj[0],
-            "type" => "function",
-            "snippet" => array_shift($funObj) . "(" . implode(", ", $funObj) . ")",
+            'text' => $funObj[0],
+            'type' => 'function',
+            'snippet' => array_shift($funObj) . '(' . implode(', ', $funObj) . ')${99}',
         ];
 
         array_push($localFuncs, $tmp);
     }
 
-    echo json_encode(["user_functions" => $localFuncs]);
+    echo json_encode(['user_functions' => $localFuncs]);

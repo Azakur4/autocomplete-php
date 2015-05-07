@@ -1,8 +1,10 @@
 <?php
-    parse_str(implode('&', array_slice($argv, 1)), $_GET);
+    $source = '';
 
-    $file = $_GET['filePath'];
-    $source = file_get_contents($file);
+    while ($a = fread(STDIN, 1024)) {
+        $source .= $a;
+    }
+
     $tokens = token_get_all($source);
 
     $cachedVars = array();

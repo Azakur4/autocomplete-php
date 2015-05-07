@@ -14,10 +14,6 @@ module.exports =
 
   # Load Completions from json
   loadCompletions: ->
-    atom.commands.add 'atom-workspace', 'core:save': (e) =>
-      @execute true, {editor: atom.workspace.getActiveTextEditor()}, true
-      @execute false, {editor: atom.workspace.getActiveTextEditor()}, true
-
     @completions = {}
     fs.readFile path.resolve(__dirname, '..', 'completions.json'), (error, content) =>
       @completions = JSON.parse(content) unless error?
@@ -40,25 +36,38 @@ module.exports =
 
       phpEx = 'get_user_functions.php'
 
-    exec.exec 'php ' + __dirname + '/php/' + phpEx + ' filePath=' + editor.getPath(), (error, stdout, stderr) =>
+    # exec.exec 'php ' + __dirname + '/php/' + phpEx + ' filePath=' + editor.getPath(), (error, stdout, stderr) =>
+    exec.exec 'php ' + __dirname + '/php/' + phpEx + ' <<< \'' + editor.getText() + '\'', (error, stdout, stderr) =>
+      console.log stdout
+      console.log stderr
+      console.log error
+
       if type
         @userVars = JSON.parse(stdout)
       else
         @userFuncs = JSON.parse(stdout)
 
       @lastPath = editor.getPath()
+      @lastTimeEx = new Date()
 
   # Required: Return a promise, an array of suggestions, or null.
   # {editor, bufferPosition, scopeDescriptor, prefix}
   getSuggestions: (request) ->
     new Promise (resolve) =>
+      # if @lastTimeEx? and Math.floor((new Date() - @lastTimeEx) / 60000) < 1
+      #   typeEx = false
+      # else
+      #   typeEx = true
+
+      typeEx = true
+
       if @notShowAutocomplete(request)
         resolve([])
       else if @isVariable(request)
-        @execute(true, request)
+        @execute(true, request, typeEx)
         resolve(@getVarsCompletions(request))
       else if @isFunCon(request)
-        @execute(false, request)
+        @execute(false, request, typeEx)
         resolve(@getCompletions(request))
       else
         resolve([])
