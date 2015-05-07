@@ -36,30 +36,32 @@ module.exports =
 
       phpEx = 'get_user_functions.php'
 
-    # exec.exec 'php ' + __dirname + '/php/' + phpEx + ' filePath=' + editor.getPath(), (error, stdout, stderr) =>
-    exec.exec 'php ' + __dirname + '/php/' + phpEx + ' <<< \'' + editor.getText() + '\'', (error, stdout, stderr) =>
-      console.log stdout
-      console.log stderr
-      console.log error
+    proc = exec.spawn 'php', [__dirname + '/php/' + phpEx]
+    proc.stdout.pipe process.stdout
 
+    proc.stdin.write(editor.getText())
+    proc.stdin.end()
+
+    proc.stdout.on 'data', (data) =>
       if type
-        @userVars = JSON.parse(stdout)
+        @userVars = JSON.parse('' + data)
       else
-        @userFuncs = JSON.parse(stdout)
+        @userFuncs = JSON.parse('' + data)
 
       @lastPath = editor.getPath()
       @lastTimeEx = new Date()
+
+    proc.stderr.on 'data', (data) ->
+      console.log 'err: ' + data
 
   # Required: Return a promise, an array of suggestions, or null.
   # {editor, bufferPosition, scopeDescriptor, prefix}
   getSuggestions: (request) ->
     new Promise (resolve) =>
-      # if @lastTimeEx? and Math.floor((new Date() - @lastTimeEx) / 60000) < 1
-      #   typeEx = false
-      # else
-      #   typeEx = true
-
-      typeEx = true
+      if @lastTimeEx? and Math.floor((new Date() - @lastTimeEx) / 60000) < 1
+        typeEx = false
+      else
+        typeEx = true
 
       if @notShowAutocomplete(request)
         resolve([])
