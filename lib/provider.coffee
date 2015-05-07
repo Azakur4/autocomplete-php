@@ -39,6 +39,7 @@ module.exports =
     proc = exec.spawn 'php', [__dirname + '/php/' + phpEx]
     proc.stdout.pipe process.stdout
 
+    proc.stdin.setEncoding('utf8')
     proc.stdin.write(editor.getText())
     proc.stdin.end()
 
