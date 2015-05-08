@@ -36,12 +36,7 @@ module.exports =
 
       phpEx = 'get_user_functions.php'
 
-    if process.platform is 'win32'
-      proc = exec.spawn 'cmd', ['/S', '/C', __dirname + '/php/' + phpEx]
-    else
-      proc = exec.spawn 'php', [__dirname + '/php/' + phpEx]
-
-    proc.stdout.pipe process.stdout
+    proc = exec.spawn 'php', [__dirname + '/php/' + phpEx]
 
     proc.stdin.write(editor.getText())
     proc.stdin.end()
