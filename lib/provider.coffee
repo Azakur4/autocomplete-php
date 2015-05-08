@@ -120,12 +120,12 @@ module.exports =
     for keyword in @completions.keywords when keyword.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(keyword))
 
-    for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(func))
-
     if @userFuncs?
       for userFunc in @userFuncs.user_functions when userFunc.text.toLowerCase().indexOf(lowerCasePrefix) is 0
         completions.push(@buildCompletion(userFunc))
+
+    for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(func))
 
     completions
 
