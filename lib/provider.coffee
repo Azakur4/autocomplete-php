@@ -36,10 +36,13 @@ module.exports =
 
       phpEx = 'get_user_functions.php'
 
-    proc = exec.spawn 'php', [__dirname + '/php/' + phpEx]
+    if process.platform is 'win32'
+      proc = exec.spawn 'cmd', ['/S', '/C', __dirname + '/php/' + phpEx]
+    else
+      proc = exec.spawn 'php', [__dirname + '/php/' + phpEx]
+
     proc.stdout.pipe process.stdout
 
-    proc.stdin.setEncoding('utf8')
     proc.stdin.write(editor.getText())
     proc.stdin.end()
 
@@ -50,7 +53,7 @@ module.exports =
         @userFuncs = JSON.parse('' + data)
 
       @lastPath = editor.getPath()
-      @lastTimeEx = new Date()
+      # @lastTimeEx = new Date()
 
     proc.stderr.on 'data', (data) ->
       console.log 'err: ' + data
@@ -59,10 +62,12 @@ module.exports =
   # {editor, bufferPosition, scopeDescriptor, prefix}
   getSuggestions: (request) ->
     new Promise (resolve) =>
-      if @lastTimeEx? and Math.floor((new Date() - @lastTimeEx) / 60000) < 1
-        typeEx = false
-      else
-        typeEx = true
+      # if @lastTimeEx? and Math.floor((new Date() - @lastTimeEx) / 60000) < 1
+      #   typeEx = false
+      # else
+      #   typeEx = true
+
+      typeEx = true
 
       if @notShowAutocomplete(request)
         resolve([])
