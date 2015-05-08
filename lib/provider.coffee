@@ -1,3 +1,5 @@
+exec = require "child_process"
+
 module.exports =
   # This will work on JavaScript and CoffeeScript files, but not in js comments.
   selector: '.source.php'
@@ -22,16 +24,53 @@ module.exports =
       @funtions = JSON.parse(content) unless error?
       return
 
+  execute: (type, {editor}, force = false) ->
+    if type
+      if !force
+        return if @userVars? and @lastPath == editor.getPath()
+
+      phpEx = 'get_user_vars.php'
+    else
+      if !force
+        return if @userFunc? and @lastPath == editor.getPath()
+
+      phpEx = 'get_user_functions.php'
+
+    proc = exec.spawn 'php', [__dirname + '/php/' + phpEx]
+
+    proc.stdin.write(editor.getText())
+    proc.stdin.end()
+
+    proc.stdout.on 'data', (data) =>
+      if type
+        @userVars = JSON.parse('' + data)
+      else
+        @userFuncs = JSON.parse('' + data)
+
+      @lastPath = editor.getPath()
+      # @lastTimeEx = new Date()
+
+    proc.stderr.on 'data', (data) ->
+      console.log 'err: ' + data
 
   # Required: Return a promise, an array of suggestions, or null.
   # {editor, bufferPosition, scopeDescriptor, prefix}
   getSuggestions: (request) ->
     new Promise (resolve) =>
+      # if @lastTimeEx? and Math.floor((new Date() - @lastTimeEx) / 60000) < 1
+      #   typeEx = false
+      # else
+      #   typeEx = true
+
+      typeEx = true
+
       if @notShowAutocomplete(request)
         resolve([])
       else if @isVariable(request)
+        @execute(true, request, typeEx)
         resolve(@getVarsCompletions(request))
       else if @isFunCon(request)
+        @execute(false, request, typeEx)
         resolve(@getCompletions(request))
       else
         resolve([])
@@ -50,6 +89,8 @@ module.exports =
     return true if scopes.indexOf('keyword.operator.assignment.php') isnt -1 or
       scopes.indexOf('keyword.operator.comparison.php') isnt -1 or
       scopes.indexOf('keyword.operator.logical.php') isnt -1 or
+      scopes.indexOf('string.quoted.double.php') isnt -1 or
+      scopes.indexOf('string.quoted.single.php') isnt -1 or
       scopes.length < 4
     return true if @isInString(request) and @isFunCon(request)
 
@@ -69,18 +110,22 @@ module.exports =
       scopes.indexOf('storage.type.php') isnt -1 or
       scopes.indexOf('support.function.construct.php')
 
-  getCompletions: ({prefix}) ->
+  getCompletions: ({editor, prefix}) ->
     completions = []
     lowerCasePrefix = prefix.toLowerCase()
 
-    for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(func))
+    for constants in @completions.constants when constants.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(constants))
 
     for keyword in @completions.keywords when keyword.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(keyword))
 
-    for constants in @completions.constants when constants.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(constants))
+    for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(func))
+
+    if @userFuncs?
+      for userFunc in @userFuncs.user_functions when userFunc.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+        completions.push(@buildCompletion(userFunc))
 
     completions
 
@@ -88,22 +133,15 @@ module.exports =
     completions = []
     lowerCasePrefix = prefix.toLowerCase()
 
-    tokenVar = /[$][\a-zA-Z_][a-zA-Z0-9_]*/g
-    varList = editor.getText().match(tokenVar)
-    @cachedLocalVariables = []
-
-    if varList
-      for _var in varList
-        if @cachedLocalVariables.indexOf(_var) == -1 and _var.substr(1) != prefix
-          @cachedLocalVariables.push {text: _var.substr(1), type: 'variable'}
-
-    for localVar in @cachedLocalVariables when localVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(localVar))
+    if @userVars?
+      for userVar in @userVars.user_vars when userVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+        completions.push(@buildCompletion(userVar))
 
     for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(variable))
 
     completions
+
 
   buildCompletion: (suggestion) ->
     text: suggestion.text
