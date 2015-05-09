@@ -1,3 +1,11 @@
+## 0.3.1 [Beta]
+* Fix an issue with anonymous functions in php
+
+## 0.3.0 [Beta]
+* Autocomplete for custom functions with snippets for params
+* Autocomplete for custom variables
+* Now the process is made with php tokenizer (Now is mandatory have php bin in ur enviroment Path)
+
 ## 0.2.6 [Alpha]
 * Added snippets for internal php functions by [@amp343](https://github.com/amp343)
 
