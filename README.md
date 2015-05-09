@@ -1,6 +1,8 @@
 # autocomplete-php package
 An Atom PHP autocompleter for `autocomplete-plus`
 
+**Now is mandatory have PHP in the enviroment PATH**
+
 Beta version.
 
 ![Demo](assets/img/demo/gif)
@@ -8,7 +10,7 @@ Beta version.
 ### Requirements:
 - Atom `autocomplete-plus` package
   - (instll with `apm install autocomplete-plus`)
-- U will need have PHP in the enviroment PATH
+- Now is mandatory have PHP in the enviroment PATH
 
 ### Installation
 - `apm install autocomplete-php`

@@ -12,6 +12,7 @@
     $tmpFunc = array();
 
     $nextStringIsFunc = false;
+    $isClousure = true;
     $functionParameters = false;
     $snippetCount = 1;
 
@@ -22,16 +23,22 @@
                 break;
             case T_STRING:
                 if($nextStringIsFunc) {
-                    // $nextStringIsFunc = false;
-                    if (!in_array($token[1], $cachedFunctions)) {
-                        $cachedFunctions[] = $token[1];
-                        $tmpFunc[] =  $token[1];
+                    $isClousure = false;
+
+                    if ($token[1] !== null) {
+                        if (!in_array($token[1], $cachedFunctions)) {
+                            $cachedFunctions[] = $token[1];
+                            $tmpFunc[] =  $token[1];
+                        }
+                    } else {
+                        $nextStringIsFunc = false;
                     }
                 }
                 break;
             case '(':
-                if ($nextStringIsFunc) {
+                if ($nextStringIsFunc && !$isClousure) {
                     $nextStringIsFunc = false;
+                    $isClousure = true;
                     $functionParameters = true;
                 }
                 break;
