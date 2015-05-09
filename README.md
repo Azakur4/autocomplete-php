@@ -5,7 +5,7 @@ An Atom PHP autocompleter for `autocomplete-plus`
 
 Beta version.
 
-![Demo](assets/img/demo/gif)
+![Demo](https://raw.github.com/Azakur4/autocomplete-php/master/assets/img/demo.gif)
 
 ### Requirements:
 - Atom `autocomplete-plus` package
