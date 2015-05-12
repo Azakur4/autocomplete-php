@@ -1,7 +1,7 @@
 {
   "name": "autocomplete-php",
   "main": "./lib/main",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Autocomplete-php is a PHP provider for autocomplete+",
   "repository": "https://github.com/Azakur4/autocomplete-php",
   "license": "MIT",
