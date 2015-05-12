@@ -1,3 +1,6 @@
+## 0.3.3 [Beta]
+* Add vars completions in array
+
 ## 0.3.2 [Beta]
 * More fixes when we try to get custom functions
 * Better completions in differents scenarios

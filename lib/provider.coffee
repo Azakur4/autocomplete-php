@@ -57,6 +57,7 @@ module.exports =
       if @notShowAutocomplete(request)
         resolve([])
       else if @isAll(request)
+        console.log 'teste'
         @execute(request, typeEx)
         resolve(@getAllCompletions(request))
       else if @isVariable(request)
@@ -93,7 +94,8 @@ module.exports =
 
   isAll: ({scopeDescriptor}) ->
     scopes = scopeDescriptor.getScopesArray()
-    return true if scopes.length is 3
+    return true if scopes.length is 3 or
+      scopes.indexOf('meta.array.php') isnt -1
 
   isVariable: ({scopeDescriptor}) ->
     scopes = scopeDescriptor.getScopesArray()
