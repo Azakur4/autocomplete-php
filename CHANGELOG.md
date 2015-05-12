@@ -1,3 +1,7 @@
+## 0.3.2 [Beta]
+* More fixes when we try to get custom functions
+* Better completions in differents scenarios
+
 ## 0.3.1 [Beta]
 * Fix an issue with anonymous functions in php
 

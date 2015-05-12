@@ -24,17 +24,11 @@ module.exports =
       @funtions = JSON.parse(content) unless error?
       return
 
-  execute: (type, {editor}, force = false) ->
-    if type
-      if !force
-        return if @userVars? and @lastPath == editor.getPath()
+  execute: ({editor}, force = false) ->
+    if !force
+      return if @userVars? and @lastPath == editor.getPath()
 
-      phpEx = 'get_user_vars.php'
-    else
-      if !force
-        return if @userFunc? and @lastPath == editor.getPath()
-
-      phpEx = 'get_user_functions.php'
+    phpEx = 'get_user_all.php'
 
     proc = exec.spawn 'php', [__dirname + '/php/' + phpEx]
 
@@ -42,11 +36,7 @@ module.exports =
     proc.stdin.end()
 
     proc.stdout.on 'data', (data) =>
-      if type
-        @userVars = JSON.parse('' + data)
-      else
-        @userFuncs = JSON.parse('' + data)
-
+      @userSuggestions = JSON.parse('' + data)
       @lastPath = editor.getPath()
       # @lastTimeEx = new Date()
 
@@ -66,11 +56,14 @@ module.exports =
 
       if @notShowAutocomplete(request)
         resolve([])
+      else if @isAll(request)
+        @execute(request, typeEx)
+        resolve(@getAllCompletions(request))
       else if @isVariable(request)
-        @execute(true, request, typeEx)
+        @execute(request, typeEx)
         resolve(@getVarsCompletions(request))
       else if @isFunCon(request)
-        @execute(false, request, typeEx)
+        @execute(request, typeEx)
         resolve(@getCompletions(request))
       else
         resolve([])
@@ -90,14 +83,17 @@ module.exports =
       scopes.indexOf('keyword.operator.comparison.php') isnt -1 or
       scopes.indexOf('keyword.operator.logical.php') isnt -1 or
       scopes.indexOf('string.quoted.double.php') isnt -1 or
-      scopes.indexOf('string.quoted.single.php') isnt -1 or
-      scopes.length < 4
+      scopes.indexOf('string.quoted.single.php') isnt -1
     return true if @isInString(request) and @isFunCon(request)
 
   isInString: ({scopeDescriptor}) ->
     scopes = scopeDescriptor.getScopesArray()
     return true if scopes.indexOf('string.quoted.single.php') isnt -1 or
       scopes.indexOf('string.quoted.double.php') isnt -1
+
+  isAll: ({scopeDescriptor}) ->
+    scopes = scopeDescriptor.getScopesArray()
+    return true if scopes.length is 3
 
   isVariable: ({scopeDescriptor}) ->
     scopes = scopeDescriptor.getScopesArray()
@@ -110,6 +106,32 @@ module.exports =
       scopes.indexOf('storage.type.php') isnt -1 or
       scopes.indexOf('support.function.construct.php')
 
+  getAllCompletions: ({editor, prefix}) ->
+    completions = []
+    lowerCasePrefix = prefix.toLowerCase()
+
+    if @userSuggestions?
+      for userVar in @userSuggestions.user_vars when userVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+        completions.push(@buildCompletion(userVar))
+
+    for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(variable))
+
+    for constants in @completions.constants when constants.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(constants))
+
+    for keyword in @completions.keywords when keyword.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(keyword))
+
+    if @userSuggestions?
+      for userFunc in @userSuggestions.user_functions when userFunc.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+        completions.push(@buildCompletion(userFunc))
+
+    for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(func))
+
+    completions
+
   getCompletions: ({editor, prefix}) ->
     completions = []
     lowerCasePrefix = prefix.toLowerCase()
@@ -120,8 +142,8 @@ module.exports =
     for keyword in @completions.keywords when keyword.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(keyword))
 
-    if @userFuncs?
-      for userFunc in @userFuncs.user_functions when userFunc.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+    if @userSuggestions?
+      for userFunc in @userSuggestions.user_functions when userFunc.text.toLowerCase().indexOf(lowerCasePrefix) is 0
         completions.push(@buildCompletion(userFunc))
 
     for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
@@ -133,8 +155,8 @@ module.exports =
     completions = []
     lowerCasePrefix = prefix.toLowerCase()
 
-    if @userVars?
-      for userVar in @userVars.user_vars when userVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+    if @userSuggestions?
+      for userVar in @userSuggestions.user_vars when userVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
         completions.push(@buildCompletion(userVar))
 
     for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
