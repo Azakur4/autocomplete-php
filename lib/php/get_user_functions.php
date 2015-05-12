@@ -11,18 +11,18 @@
     $cachedFunctionComplex = array();
     $tmpFunc = array();
 
-    $nextStringIsFunc = false;
+    $insideFunc = false;
     $isClousure = true;
-    $functionParameters = false;
+    $haveParameters = false;
     $snippetCount = 1;
 
     foreach($tokens as $token) {
         switch($token[0]) {
             case T_FUNCTION:
-                $nextStringIsFunc = true;
+                $insideFunc = true;
                 break;
             case T_STRING:
-                if($nextStringIsFunc) {
+                if($insideFunc) {
                     $isClousure = false;
 
                     if ($token[1] !== null) {
@@ -31,27 +31,28 @@
                             $tmpFunc[] =  $token[1];
                         }
                     } else {
-                        $nextStringIsFunc = false;
+                        $insideFunc = false;
                     }
                 }
                 break;
             case '(':
-                if ($nextStringIsFunc && !$isClousure) {
-                    $nextStringIsFunc = false;
-                    $isClousure = true;
-                    $functionParameters = true;
+                if ($insideFunc && !$isClousure) {
+                    $haveParameters = true;
                 }
                 break;
             case ')':
-                if ($functionParameters) {
-                    $functionParameters = false;
+                if ($insideFunc && $haveParameters) {
                     $cachedFunctionComplex[] = $tmpFunc;
                     $tmpFunc = array();
                     $snippetCount = 1;
                 }
+
+                $haveParameters = false;
+                $isClousure = true;
+                $insideFunc = false;
                 break;
             case T_VARIABLE:
-                if ($functionParameters) {
+                if ($haveParameters) {
                     $tmpFunc[] = '${' . $snippetCount++ . ':' . $token[1] . '}';
                 }
                 break;
