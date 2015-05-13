@@ -28,6 +28,7 @@ module.exports =
     if !force
       return if @userVars? and @lastPath == editor.getPath()
 
+    @compileData = ''
     phpEx = 'get_user_all.php'
 
     proc = exec.spawn 'php', [__dirname + '/php/' + phpEx]
@@ -36,12 +37,19 @@ module.exports =
     proc.stdin.end()
 
     proc.stdout.on 'data', (data) =>
-      @userSuggestions = JSON.parse('' + data)
-      @lastPath = editor.getPath()
-      # @lastTimeEx = new Date()
+      @compileData = @compileData + data
 
     proc.stderr.on 'data', (data) ->
       console.log 'err: ' + data
+
+    proc.on 'close', (code) =>
+      try
+        @userSuggestions = JSON.parse(@compileData)
+      catch error
+        # console.log error
+
+      @lastPath = editor.getPath()
+      # @lastTimeEx = new Date()
 
   # Required: Return a promise, an array of suggestions, or null.
   # {editor, bufferPosition, scopeDescriptor, prefix}
@@ -57,7 +65,6 @@ module.exports =
       if @notShowAutocomplete(request)
         resolve([])
       else if @isAll(request)
-        console.log 'teste'
         @execute(request, typeEx)
         resolve(@getAllCompletions(request))
       else if @isVariable(request)
