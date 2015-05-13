@@ -1,3 +1,6 @@
+## 0.3.4 [Beta]
+* Fix for big files with a lot of custom vars and functions
+
 ## 0.3.3 [Beta]
 * Add vars completions in array
 
