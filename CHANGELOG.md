@@ -1,3 +1,6 @@
+## 0.3.6 [Beta]
+* Added the require for path module
+
 ## 0.3.5 [Beta]
 * Added the require for fs module
 

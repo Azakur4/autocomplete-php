@@ -1,5 +1,6 @@
 exec = require 'child_process'
 fs = require 'fs'
+path = require 'path'
 
 module.exports =
   # This will work on JavaScript and CoffeeScript files, but not in js comments.
