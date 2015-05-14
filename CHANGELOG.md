@@ -1,3 +1,6 @@
+## 0.3.5 [Beta]
+* Added the require for fs module
+
 ## 0.3.4 [Beta]
 * Fix for big files with a lot of custom vars and functions
 
