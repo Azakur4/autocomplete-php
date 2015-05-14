@@ -1,4 +1,5 @@
-exec = require "child_process"
+exec = require 'child_process'
+fs = require 'fs'
 
 module.exports =
   # This will work on JavaScript and CoffeeScript files, but not in js comments.
