@@ -1,0 +1,25 @@
+{
+    "name": "mkusher/phpcomplete-extended",
+    "authors": [
+        {
+            "name": "Aleh Kashnikau",
+            "email": "aleh.kashnikau@gmail.com"
+        }
+    ],
+    "autoload":{
+        "psr-0":{"":"src/"}
+    },
+    "require": {
+        "phine/path": "~1.0",
+        "nikic/php-parser": "~1.1",
+        "monolog/monolog": "~1.13",
+        "mnapoli/php-di": "~4.4",
+        "react/react": "0.4.*",
+        "phpdocumentor/reflection-docblock": "~2.0"
+    },
+    "require-dev": {
+        "behat/behat": "~3.0",
+        "peridot-php/peridot": "~1.15",
+        "peridot-php/leo": "~1.4"
+    }
+}

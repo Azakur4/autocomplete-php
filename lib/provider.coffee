@@ -26,7 +26,49 @@ module.exports =
       @funtions = JSON.parse(content) unless error?
       return
 
+  indexer: () ->
+    projectPath = atom.project.getPaths()[0]
+    generatorCmd = __dirname + '/padawan/bin/indexer.php'
+
+    console.log projectPath
+    console.log generatorCmd
+
+    proc = exec.spawn generatorCmd, ['generate'], {cwd: projectPath}
+
+    proc.stdout.on 'data', (data) ->
+      console.log 'stdout: ' + data
+
+    proc.stderr.on 'data', (data) ->
+      console.log 'stderr: ' + data
+
+    proc.on 'close', (code) ->
+      console.log 'End with code: ' + code
+
+  startServer: ->
+    serverCmd = __dirname + '/padawan/bin/server.php'
+
+    @padaServ = exec.spawn 'php', [serverCmd]
+
+    @padaServ.stdout.on 'data', (data) ->
+      console.log 'stdout: ' + data
+
+    @padaServ.stderr.on 'data', (data) ->
+      console.log 'stderr: ' + data
+
+    @padaServ.on 'close', (code) ->
+      console.log 'End with code: ' + code
+
+    @padaServIsRunning = true
+
+  stopServer: ->
+    if !@padaServIsRunning
+      return false
+
+    @padaServ.kill()
+    @padaServIsRunning = false
+
   execute: ({editor}, force = false) ->
+    console.log atom.project.getPaths()[0]
     if !force
       return if @userVars? and @lastPath == editor.getPath()
 
