@@ -1,6 +1,7 @@
 exec = require 'child_process'
 fs = require 'fs'
 path = require 'path'
+req = require 'request'
 
 module.exports =
   # This will work on JavaScript and CoffeeScript files, but not in js comments.
@@ -14,24 +15,9 @@ module.exports =
   inclusionPriority: 1
   excludeLowerPriority: true
 
-  # Load Completions from json
-  loadCompletions: ->
-    @completions = {}
-    fs.readFile path.resolve(__dirname, '..', 'completions.json'), (error, content) =>
-      @completions = JSON.parse(content) unless error?
-      return
-
-    @funtions = {}
-    fs.readFile path.resolve(__dirname, '..', 'functions.json'), (error, content) =>
-      @funtions = JSON.parse(content) unless error?
-      return
-
   indexer: () ->
     projectPath = atom.project.getPaths()[0]
     generatorCmd = __dirname + '/padawan/bin/indexer.php'
-
-    console.log projectPath
-    console.log generatorCmd
 
     proc = exec.spawn generatorCmd, ['generate'], {cwd: projectPath}
 
@@ -59,6 +45,7 @@ module.exports =
       console.log 'End with code: ' + code
 
     @padaServIsRunning = true
+    @loadCompletions = []
 
   stopServer: ->
     if !@padaServIsRunning
@@ -67,55 +54,36 @@ module.exports =
     @padaServ.kill()
     @padaServIsRunning = false
 
-  execute: ({editor}, force = false) ->
-    console.log atom.project.getPaths()[0]
-    if !force
-      return if @userVars? and @lastPath == editor.getPath()
+  execute: ({editor}) ->
+    urlParams = {
+      filepath: editor.getPath()
+      line: editor.getCursorBufferPosition().row + 1
+      column: editor.getCursorBufferPosition().column + 1
+      path: atom.project.getPaths()[0] + '/'
+    }
 
-    @compileData = ''
-    phpEx = 'get_user_all.php'
+    urlParams.filepath = urlParams.filepath.replace(urlParams.path + '/', '')
 
-    proc = exec.spawn 'php', [__dirname + '/php/' + phpEx]
+    contents = editor.getText()
 
-    proc.stdin.write(editor.getText())
-    proc.stdin.end()
+    headersParams = {
+      'Content-Length': contents.length
+    }
 
-    proc.stdout.on 'data', (data) =>
-      @compileData = @compileData + data
+    req.post {headers: headersParams, url: 'http://localhost:15155/complete?filepath=' + urlParams.filepath + '&line=' + urlParams.line + '&column=' + urlParams.column + '&path=' + urlParams.path, form: contents}, (error, response, body) =>
+      # console.log error
+      # console.log response
+      padawanCompletions = JSON.parse(body)
 
-    proc.stderr.on 'data', (data) ->
-      console.log 'err: ' + data
-
-    proc.on 'close', (code) =>
-      try
-        @userSuggestions = JSON.parse(@compileData)
-      catch error
-        # console.log error
-
-      @lastPath = editor.getPath()
-      # @lastTimeEx = new Date()
+      if padawanCompletions.completion?.length > 0
+        @loadCompletions = padawanCompletions
 
   # Required: Return a promise, an array of suggestions, or null.
   # {editor, bufferPosition, scopeDescriptor, prefix}
   getSuggestions: (request) ->
     new Promise (resolve) =>
-      # if @lastTimeEx? and Math.floor((new Date() - @lastTimeEx) / 60000) < 1
-      #   typeEx = false
-      # else
-      #   typeEx = true
-
-      typeEx = true
-
-      if @notShowAutocomplete(request)
-        resolve([])
-      else if @isAll(request)
-        @execute(request, typeEx)
-        resolve(@getAllCompletions(request))
-      else if @isVariable(request)
-        @execute(request, typeEx)
-        resolve(@getVarsCompletions(request))
-      else if @isFunCon(request)
-        @execute(request, typeEx)
+      if @padaServIsRunning?
+        @execute(request)
         resolve(@getCompletions(request))
       else
         resolve([])
@@ -128,95 +96,14 @@ module.exports =
   # from things, kill any processes, etc.
   dispose: ->
 
-  notShowAutocomplete: (request) ->
-    return true if request.prefix is ''
-    scopes = request.scopeDescriptor.getScopesArray()
-    return true if scopes.indexOf('keyword.operator.assignment.php') isnt -1 or
-      scopes.indexOf('keyword.operator.comparison.php') isnt -1 or
-      scopes.indexOf('keyword.operator.logical.php') isnt -1 or
-      scopes.indexOf('string.quoted.double.php') isnt -1 or
-      scopes.indexOf('string.quoted.single.php') isnt -1
-    return true if @isInString(request) and @isFunCon(request)
-
-  isInString: ({scopeDescriptor}) ->
-    scopes = scopeDescriptor.getScopesArray()
-    return true if scopes.indexOf('string.quoted.single.php') isnt -1 or
-      scopes.indexOf('string.quoted.double.php') isnt -1
-
-  isAll: ({scopeDescriptor}) ->
-    scopes = scopeDescriptor.getScopesArray()
-    return true if scopes.length is 3 or
-      scopes.indexOf('meta.array.php') isnt -1
-
-  isVariable: ({scopeDescriptor}) ->
-    scopes = scopeDescriptor.getScopesArray()
-    return true if scopes.indexOf('variable.other.php') isnt -1
-
-  isFunCon: ({scopeDescriptor}) ->
-    scopes = scopeDescriptor.getScopesArray()
-    return true if scopes.indexOf('constant.other.php') isnt -1 or
-      scopes.indexOf('keyword.control.php') isnt -1 or
-      scopes.indexOf('storage.type.php') isnt -1 or
-      scopes.indexOf('support.function.construct.php')
-
-  getAllCompletions: ({editor, prefix}) ->
-    completions = []
-    lowerCasePrefix = prefix.toLowerCase()
-
-    if @userSuggestions?
-      for userVar in @userSuggestions.user_vars when userVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-        completions.push(@buildCompletion(userVar))
-
-    for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(variable))
-
-    for constants in @completions.constants when constants.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(constants))
-
-    for keyword in @completions.keywords when keyword.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(keyword))
-
-    if @userSuggestions?
-      for userFunc in @userSuggestions.user_functions when userFunc.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-        completions.push(@buildCompletion(userFunc))
-
-    for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(func))
-
-    completions
-
   getCompletions: ({editor, prefix}) ->
     completions = []
     lowerCasePrefix = prefix.toLowerCase()
 
-    for constants in @completions.constants when constants.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(constants))
+    for sugges in @loadCompletions?.completion when sugges.name.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion({ text: sugges.name, type: 'function', leftLabel: sugges.signature, description: sugges.description}))
 
-    for keyword in @completions.keywords when keyword.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(keyword))
-
-    if @userSuggestions?
-      for userFunc in @userSuggestions.user_functions when userFunc.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-        completions.push(@buildCompletion(userFunc))
-
-    for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(func))
-
-    completions
-
-  getVarsCompletions: ({editor, prefix}) ->
-    completions = []
-    lowerCasePrefix = prefix.toLowerCase()
-
-    if @userSuggestions?
-      for userVar in @userSuggestions.user_vars when userVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-        completions.push(@buildCompletion(userVar))
-
-    for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(variable))
-
-    completions
-
+    return completions
 
   buildCompletion: (suggestion) ->
     text: suggestion.text
