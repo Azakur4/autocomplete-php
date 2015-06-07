@@ -2,7 +2,7 @@ provider = require './provider'
 
 module.exports =
   activate: ->
-    provider.loadCompletions()
+    # provider.loadCompletions()
 
     atom.commands.add 'atom-workspace', 'autocomplete-php:startServer', -> provider.startServer()
     atom.commands.add 'atom-workspace', 'autocomplete-php:stopServer', -> provider.stopServer()

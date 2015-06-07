@@ -14,5 +14,9 @@
         "2.0.0": "getProvider"
       }
     }
+  },
+  "dependencies": {
+    "atom-message-panel": "^1.2.4",
+    "request": "^2.57.0"
   }
 }
