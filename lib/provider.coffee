@@ -3,6 +3,8 @@ fs = require 'fs'
 path = require 'path'
 
 module.exports =
+  executablePath: 'php'
+
   # This will work on JavaScript and CoffeeScript files, but not in js comments.
   selector: '.source.php'
   disableForSelector: '.source.php .comment'
@@ -33,7 +35,7 @@ module.exports =
     @compileData = ''
     phpEx = 'get_user_all.php'
 
-    proc = exec.spawn 'php', [__dirname + '/php/' + phpEx]
+    proc = exec.spawn this.executablePath, [__dirname + '/php/' + phpEx]
 
     proc.stdin.write(editor.getText())
     proc.stdin.end()
