@@ -1,3 +1,6 @@
+## 0.3.7 [Beta]
+* Added a new setting to specify the path of PHP. Thanks to [@wasikuss](https://github.com/wasikuss)
+
 ## 0.3.6 [Beta]
 * Added the require for path module
 
