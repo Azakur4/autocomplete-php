@@ -28,6 +28,11 @@ module.exports =
       @funtions = JSON.parse(content) unless error?
       return
 
+    @methods = {}
+    fs.readFile path.resolve(__dirname, '..', 'methods.json'), (error, content) =>
+      @methods = JSON.parse(content) unless error?
+      return
+
   execute: ({editor}, force = false) ->
     if !force
       return if @userVars? and @lastPath == editor.getPath()
@@ -143,6 +148,9 @@ module.exports =
     for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(func))
 
+    for func in @methods.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(func))
+
     completions
 
   getCompletions: ({editor, prefix}) ->
@@ -160,6 +168,9 @@ module.exports =
         completions.push(@buildCompletion(userFunc))
 
     for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(func))
+
+    for func in @methods.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(func))
 
     completions
