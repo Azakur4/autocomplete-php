@@ -148,8 +148,8 @@ module.exports =
     for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(func))
 
-    for func in @methods.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(func))
+    for methods in @methods.methods when methods.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(methods))
 
     completions
 
@@ -170,8 +170,8 @@ module.exports =
     for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(func))
 
-    for func in @methods.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(func))
+    for methods in @methods.methods when methods.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+      completions.push(@buildCompletion(methods))
 
     completions
 

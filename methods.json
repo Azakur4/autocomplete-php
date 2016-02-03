@@ -1,5 +1,5 @@
 {
-  "functions": [
+  "methods": [
     {
       "text": "__construct",
       "type": "method",
