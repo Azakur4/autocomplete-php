@@ -1,0 +1,94 @@
+{
+  "methods": [
+    {
+      "text": "__construct",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.decon.php#object.construct",
+      "snippet": "__construct()${1}"
+    },
+    {
+      "text": "__destruct",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.decon.php#object.destruct",
+      "snippet": "__destruct()${1}"
+    },
+    {
+      "text": "__call",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.overloading.php#object.call",
+      "snippet": "__call()${1}"
+    },
+    {
+      "text": "__callStatic",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.overloading.php#object.callstatic",
+      "snippet": "__callStatic()${1}"
+    },
+    {
+      "text": "__get",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.overloading.php#object.get",
+      "snippet": "__get()${1}"
+    },
+    {
+      "text": "__set",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.overloading.php#object.set",
+      "snippet": "__set()${1}"
+    },
+    {
+      "text": "__isset",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.overloading.php#object.isset",
+      "snippet": "__isset()${1}"
+    },
+    {
+      "text": "__unset",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.overloading.php#object.unset",
+      "snippet": "__unset()${1}"
+    },
+    {
+      "text": "__sleep",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.magic.php#object.sleep",
+      "snippet": "__sleep()${1}"
+    },
+    {
+      "text": "__wakeup",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.magic.php#object.wakeup",
+      "snippet": "__wakeup()${1}"
+    },
+    {
+      "text": "__toString",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.magic.php#object.tostring",
+      "snippet": "__toString()${1}"
+    },
+    {
+      "text": "__invoke",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.magic.php#object.invoke",
+      "snippet": "__invoke()${1}"
+    },
+    {
+      "text": "__set_state",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.magic.php#object.set-state",
+      "snippet": "__set_state()${1}"
+    },
+    {
+      "text": "__clone",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.cloning.php#object.clone",
+      "snippet": "__clone()${1}"
+    },
+    {
+      "text": "__debugInfo",
+      "type": "method",
+      "descriptionMoreURL": "http://php.net/manual/en/language.oop5.magic.php#object.debuginfo",
+      "snippet": "__debugInfo()${1}"
+    }
+  ]
+}
