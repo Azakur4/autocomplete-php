@@ -8,8 +8,7 @@ Beta version.
 ![Demo](https://raw.github.com/Azakur4/autocomplete-php/master/assets/img/demo.gif)
 
 ### Requirements:
-- Atom `autocomplete-plus` package
-  - (install with `apm install autocomplete-plus`)
+- Atom `autocomplete-plus` package (bundled with Atom)
 - Now is mandatory have PHP in the environment PATH
 
 ### Installation
