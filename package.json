@@ -1,7 +1,7 @@
 {
   "name": "improved-autocomplete-php",
   "main": "./lib/main",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "improved-autocomplete-php is a PHP provider for autocomplete+",
   "repository": "https://github.com/shenmin/improved-autocomplete-php",
   "license": "MIT",
