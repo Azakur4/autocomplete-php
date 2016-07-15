@@ -1,9 +1,8 @@
 <?php
-    $source = '';
 
-    while ($a = fread(STDIN, 1024)) {
-        $source .= $a;
-    }
+function parse_file($filename) {
+    $file = fopen($filename, "r");
+    $source = fread($file, filesize($filename));
 
     $tokens = token_get_all($source);
 
@@ -79,13 +78,33 @@
     $localFuncs = array();
 
     foreach ($cachedFunctionComplex as $funObj) {
-        $tmp = [
-            'text' => $funObj[0],
-            'type' => 'function',
-            'snippet' => array_shift($funObj) . '(' . implode(', ', $funObj) . ')${99}',
-        ];
+        if (isset($funObj[0])) {
+            $tmp = [
+                'text' => $funObj[0],
+                'type' => 'function',
+                'snippet' => array_shift($funObj) . '(' . implode(', ', $funObj) . ')${99}',
+            ];
 
-        array_push($localFuncs, $tmp);
+            array_push($localFuncs, $tmp);
+        }
     }
 
-    echo json_encode(['user_vars' => $localVars, 'user_functions' => $localFuncs]);
+    return ['user_vars' => $localVars, 'user_functions' => $localFuncs];
+}
+
+$editing_file = fread(STDIN, 1024);
+$dirname = dirname($editing_file);
+
+$r = ['user_vars' => array(), 'user_functions' => array()];
+
+$files = scandir($dirname);
+foreach ($files as $filename) {
+    $ext = pathinfo($filename, PATHINFO_EXTENSION);
+    if (strtolower($ext) == 'php') {
+        $r0 = parse_file($dirname.'/'.$filename);
+        $r['user_vars'] = array_merge($r['user_vars'], $r0['user_vars']);
+        $r['user_functions'] = array_merge($r['user_functions'], $r0['user_functions']);
+    }
+}
+
+echo json_encode($r);
