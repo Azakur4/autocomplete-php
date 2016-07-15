@@ -10,7 +10,7 @@ module.exports =
 
   activate: ->
     @subscriptions = new CompositeDisposable
-    @subscriptions.add atom.config.observe 'autocomplete-php.executablePath',
+    @subscriptions.add atom.config.observe 'improved-autocomplete-php.executablePath',
       (executablePath) ->
         provider.executablePath = executablePath
     provider.loadCompletions()

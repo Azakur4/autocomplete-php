@@ -42,7 +42,7 @@ module.exports =
 
     proc = exec.spawn this.executablePath, [__dirname + '/php/' + phpEx]
 
-    proc.stdin.write(editor.getText())
+    proc.stdin.write(editor.getPath())
     proc.stdin.end()
 
     proc.stdout.on 'data', (data) =>
