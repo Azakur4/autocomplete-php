@@ -2,6 +2,21 @@ exec = require 'child_process'
 fs = require 'fs'
 path = require 'path'
 
+String.prototype.fuzzy = (search) ->
+
+    return true unless search
+
+    str = @toLowerCase()
+    search = search.toLowerCase()
+    i = 0
+    n = 0
+    l = undefined
+    while l = search[i++]
+        if ((n = str.indexOf(l, n)) == -1)
+            return false
+
+    true
+
 module.exports =
   executablePath: 'php'
 
@@ -167,12 +182,15 @@ module.exports =
       for userFunc in @userSuggestions.user_functions when userFunc.text.toLowerCase().indexOf(lowerCasePrefix) is 0
         completions.push(@buildCompletion(userFunc))
 
-    for func in @funtions.functions when func.text.toLowerCase().indexOf(lowerCasePrefix) is 0
+    for func in @funtions.functions when func.text.toLowerCase().fuzzy(lowerCasePrefix) is true
       completions.push(@buildCompletion(func))
 
     for methods in @methods.methods when methods.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(methods))
 
+    completions.sort (a, b) ->
+      a.text.length - b.text.length
+      
     completions
 
   getVarsCompletions: ({editor, prefix}) ->
