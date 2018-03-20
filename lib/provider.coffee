@@ -181,17 +181,18 @@ module.exports =
 
     if @userSuggestions?
       for userVar in @userSuggestions.user_vars when userVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-        completions.push(@buildCompletion(userVar))
+        completions.push(@buildCompletion(userVar, prefix))
 
     for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-      completions.push(@buildCompletion(variable))
+      completions.push(@buildCompletion(variable, prefix))
 
     completions
 
 
-  buildCompletion: (suggestion) ->
+  buildCompletion: (suggestion, prefix) ->
     text: suggestion.text
     type: suggestion.type
+    replacementPrefix: prefix
     displayText: suggestion.displayText ?= null
     snippet: suggestion.snippet ?= null
     leftLabel: suggestion.leftLabel ?= null
