@@ -130,7 +130,7 @@ module.exports =
 
     if @userSuggestions?
       for userVar in @userSuggestions.user_vars when userVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-        completions.push(@buildCompletion(userVar))
+        completions.push(@buildCompletion(userVar, prefix))
 
     for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(variable))
@@ -181,7 +181,7 @@ module.exports =
 
     if @userSuggestions?
       for userVar in @userSuggestions.user_vars when userVar.text.toLowerCase().indexOf(lowerCasePrefix) is 0
-        completions.push(@buildCompletion(userVar))
+        completions.push(@buildCompletion(userVar, prefix))
 
     for variable in @completions.variables when variable.text.toLowerCase().indexOf(lowerCasePrefix) is 0
       completions.push(@buildCompletion(variable))
@@ -189,7 +189,7 @@ module.exports =
     completions
 
 
-  buildCompletion: (suggestion) ->
+  buildCompletion: (suggestion, prefix = null) ->
     text: suggestion.text
     type: suggestion.type
     displayText: suggestion.displayText ?= null
@@ -197,3 +197,4 @@ module.exports =
     leftLabel: suggestion.leftLabel ?= null
     description: suggestion.description ?= "PHP <#{suggestion.text}> #{suggestion.type}"
     descriptionMoreURL: suggestion.descriptionMoreURL ?= null
+    replacementPrefix: prefix
