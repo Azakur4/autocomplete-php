@@ -6646,7 +6646,7 @@
       "text": "print_r",
       "type": "function",
       "descriptionMoreURL": "http://php.net/manual/en/function.print-r.php",
-      "snippet": "print_r(${2:$expression})${3}"
+      "snippet": "print_r(${2:$expression});${3}"
     },
     {
       "text": "printf",
